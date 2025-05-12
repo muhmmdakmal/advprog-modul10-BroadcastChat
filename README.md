@@ -18,3 +18,9 @@ Di tahap ini saya menjalankan satu server dan tiga klien untuk chat via WebSocke
 ![alt-text](img/modifport.png)
 
 Pada langkah ini kita mengganti port koneksi WebSocket dari 2000 menjadi 8080 di kedua sisi—pada `TcpListener::bind` di server dan `ClientBuilder::from_uri` di klien. Setelah port disesuaikan, program tetap berjalan lancar dan klien-klien masih saling bertukar pesan secara real-time. Ini membuktikan bahwa port hanya berfungsi sebagai titik akhir komunikasi; selama server dan klien menggunakan alamat dan protokol yang sama, koneksi akan berhasil. Mekanisme WebSocket tidak berubah, begitu pula logika pengiriman pesannya, karena semua dijalankan di lapisan aplikasi.
+
+## Experiment 2.3: Small changes, add IP and Port
+
+![alt-text](img/exp2.3.png)
+
+Dalam eksperimen ini, saya menyertakan informasi alamat IP dan port pengirim ke setiap pesan yang diterima oleh klien. Perubahan dilakukan di sisi server, dengan menyesuaikan panggilan `bcast_tx.send(...)` sehingga menyisipkan data `addr`—alamat dan port klien pengirim. Dengan demikian, setiap klien yang menerima pesan bisa mengetahui asalnya meski belum ada identitas atau username. Di pihak klien, output juga diperjelas dengan menambahkan prefix “Akmal's Computer - From server:” untuk membedakan pesan dari server dengan masukan sendiri. Eksperimen ini memperlihatkan bagaimana data alamat socket bisa dipakai untuk memberi konteks tambahan dalam komunikasi sederhana.
